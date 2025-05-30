@@ -447,6 +447,12 @@ body {
 .navbar-link:is(:hover, :focus) {
   color: var(--kappel);
 }
+/* .navbar-link[href="index.html"][data-nav-link],
+.navbar-link[href="about.html"][data-nav-link], */
+.navbar-link[href="courses.html"][data-nav-link] {
+  color: var(--radical-red);
+  font-weight: var(--fw-700);
+}
 
 .overlay {
   position: fixed;
