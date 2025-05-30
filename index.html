@@ -97,7 +97,7 @@
       </section>
 
       <!-- Psychology Resources Submission Form -->
-      <section class="section" id="resources">
+      <!-- <section class="section" id="resources">
         <div class="container">
           <h2 class="h2 section-title">Share Psychology Resources</h2>
           <p class="section-text">
@@ -155,19 +155,19 @@
             </button>
           </form>
         </div>
-      </section>
-  <section class="section" id="resources">
-        <div class="container">
-            <h2 class="h2 section-title">Psychology Resources Library</h2>
-            <p class="section-text">
-                Browse through our collection of shared psychology resources.
-            </p>
-            
-            <div id="document-container">
-                <div class="loading">Loading documents...</div>
-            </div>
+      </section> -->
+ <section class="section" id="resources">
+    <div class="container">
+        <h2 class="h2 section-title">Psychology Resources Library</h2>
+        <p class="section-text">
+            Browse through our collection of shared psychology resources.
+        </p>
+        
+        <div id="document-container">
+            <div class="loading">Loading documents...</div>
         </div>
-    </section>
+    </div>
+</section>
       <section class="section category" aria-label="category">
         <div class="container">
           <p class="section-subtitle">Categories</p>
@@ -275,7 +275,7 @@
         </div>
       </section>
 
-      <section class="section course" id="courses" aria-label="course">
+      <!-- <section class="section course" id="courses" aria-label="course">
         <div class="container">
           <p class="section-subtitle">Popular Courses</p>
           <h2 class="h2 section-title">Psychology Courses</h2>
@@ -400,7 +400,7 @@
             <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
           </a>
         </div>
-      </section>
+      </section> -->
 
       <section class="video has-bg-image" aria-label="video" style="background-image: url('./assets/images/video-bg.png')">
         <div class="container">
@@ -674,10 +674,13 @@
     const FOLDER_ID = '15yjms__oTYQRZDUoJMfIutDBA7mz7Ezg';
     // Replace with your API key
     const API_KEY = 'AIzaSyC0GplBLR0Sz-bHfzIN3RGJN_KSm4fD4qU';
+    const DOCS_PER_PAGE = 50;
+    
+    let allFiles = [];
+    let currentPage = 1;
     
     async function fetchAllDriveDocuments() {
         try {
-            let allFiles = [];
             let pageToken = '';
             
             do {
@@ -699,7 +702,9 @@
                 
             } while (pageToken);
             
-            displayDocuments(allFiles);
+            // Sort files alphabetically by name
+            allFiles.sort((a, b) => a.name.localeCompare(b.name));
+            displayDocuments();
         } catch (error) {
             console.error('Error:', error);
             document.getElementById('document-container').innerHTML = 
@@ -707,74 +712,134 @@
         }
     }
     
-    function displayDocuments(files) {
+    function displayDocuments() {
         const container = document.getElementById('document-container');
         
-        if (!files || files.length === 0) {
+        if (!allFiles || allFiles.length === 0) {
             container.innerHTML = '<div class="empty">No documents found in this folder.</div>';
             return;
         }
         
-        // Sort files alphabetically by name
-        files.sort((a, b) => a.name.localeCompare(b.name));
+        const totalPages = Math.ceil(allFiles.length / DOCS_PER_PAGE);
+        const startIdx = (currentPage - 1) * DOCS_PER_PAGE;
+        const endIdx = startIdx + DOCS_PER_PAGE;
+        const currentFiles = allFiles.slice(startIdx, endIdx);
         
-        const list = document.createElement('ul');
-        list.className = 'document-list';
+        // Build the UI
+        let html = `
+            <div class="document-controls">
+                <div class="document-search">
+                    <input type="text" id="document-search-input" placeholder="Search documents...">
+                    <button id="search-button" class="search-button">Search</button>
+                </div>
+                <div class="pagination-info">
+                    Showing ${startIdx + 1}-${Math.min(endIdx, allFiles.length)} of ${allFiles.length} documents
+                </div>
+            </div>
+            
+            <div class="document-grid">
+        `;
         
-        // Add search functionality
-        const searchHtml = `
-            <div class="document-search">
-                <input type="text" id="document-search-input" placeholder="Search documents...">
-                <div class="document-count">Showing ${files.length} documents</div>
+        currentFiles.forEach(file => {
+            const fileType = getFileType(file.mimeType);
+            const fileIcon = getFileIcon(file.mimeType);
+            const isPDF = file.mimeType.includes('pdf');
+            
+            html += `
+                <div class="document-card">
+                    <div class="document-icon">${fileIcon}</div>
+                    <div class="document-info">
+                        <div class="document-name" title="${file.name}">${file.name}</div>
+                        <div class="document-meta">
+                            <span class="document-type">${fileType}</span>
+                            <a href="${file.webViewLink || `https://drive.google.com/file/d/${file.id}/view`}" 
+                               target="_blank" 
+                               class="document-link ${isPDF ? 'pdf-view' : ''}">
+                                ${isPDF ? 'PDF View' : 'View'}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += `
+            </div>
+            
+            <div class="pagination-controls">
+                <button id="prev-page" class="pagination-button" ${currentPage === 1 ? 'disabled' : ''}>
+                    Previous
+                </button>
+                <span class="page-indicator">
+                    Page ${currentPage} of ${totalPages}
+                </span>
+                <button id="next-page" class="pagination-button" ${currentPage === totalPages ? 'disabled' : ''}>
+                    Next
+                </button>
             </div>
         `;
         
-        files.forEach(file => {
-            const listItem = document.createElement('li');
-            listItem.className = 'document-item';
-            
-            const nameSpan = document.createElement('span');
-            nameSpan.className = 'document-name';
-            nameSpan.textContent = file.name;
-            
-            const link = document.createElement('a');
-            link.className = 'document-link';
-            link.href = file.webViewLink || `https://drive.google.com/file/d/${file.id}/view`;
-            link.target = '_blank';
-            link.textContent = getFileType(file.mimeType) + ' View';
-            
-            listItem.appendChild(nameSpan);
-            listItem.appendChild(link);
-            list.appendChild(listItem);
+        container.innerHTML = html;
+        
+        // Add event listeners
+        document.getElementById('prev-page')?.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayDocuments();
+            }
         });
         
-        container.innerHTML = searchHtml;
-        container.appendChild(list);
+        document.getElementById('next-page')?.addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayDocuments();
+            }
+        });
         
-        // Add search functionality
-        const searchInput = document.getElementById('document-search-input');
-        if (searchInput) {
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                const items = list.getElementsByClassName('document-item');
-                let visibleCount = 0;
-                
-                for (let item of items) {
-                    const text = item.textContent.toLowerCase();
-                    if (text.includes(searchTerm)) {
-                        item.style.display = 'flex';
-                        visibleCount++;
-                    } else {
-                        item.style.display = 'none';
-                    }
-                }
-                
-                // Update visible count
-                const countElement = document.querySelector('.document-count');
-                if (countElement) {
-                    countElement.textContent = `Showing ${visibleCount} of ${files.length} documents`;
-                }
-            });
+        document.getElementById('search-button')?.addEventListener('click', searchDocuments);
+        document.getElementById('document-search-input')?.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') searchDocuments();
+        });
+    }
+    
+    function searchDocuments() {
+        const searchTerm = document.getElementById('document-search-input').value.toLowerCase();
+        if (!searchTerm) {
+            currentPage = 1;
+            displayDocuments();
+            return;
+        }
+        
+        const filteredFiles = allFiles.filter(file => 
+            file.name.toLowerCase().includes(searchTerm)
+        );
+        
+        if (filteredFiles.length === 0) {
+            document.getElementById('document-container').innerHTML = 
+                '<div class="empty">No documents match your search.</div>';
+            return;
+        }
+        
+        // Display search results (temporarily replace allFiles)
+        const originalFiles = allFiles;
+        allFiles = filteredFiles;
+        currentPage = 1;
+        displayDocuments();
+        
+        // Add a button to clear search
+        const container = document.getElementById('document-container');
+        const clearButton = document.createElement('button');
+        clearButton.className = 'clear-search';
+        clearButton.textContent = 'Clear Search';
+        clearButton.addEventListener('click', () => {
+            allFiles = originalFiles;
+            currentPage = 1;
+            displayDocuments();
+        });
+        
+        const controls = container.querySelector('.document-controls');
+        if (controls) {
+            controls.appendChild(clearButton);
         }
     }
     
@@ -784,6 +849,14 @@
         if (mimeType.includes('presentation')) return 'PPT';
         if (mimeType.includes('spreadsheet')) return 'Sheet';
         return 'File';
+    }
+    
+    function getFileIcon(mimeType) {
+        if (mimeType.includes('pdf')) return '📄';
+        if (mimeType.includes('word')) return '📝';
+        if (mimeType.includes('presentation')) return '📊';
+        if (mimeType.includes('spreadsheet')) return '📈';
+        return '📁';
     }
     
     // Load documents when page loads
