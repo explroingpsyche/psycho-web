@@ -1,9 +1,9 @@
 <div align="center">
   
-  ![GitHub repo size](https://img.shields.io/github/repo-size/codewithsadee/eduweb)
-  ![GitHub stars](https://img.shields.io/github/stars/codewithsadee/eduweb?style=social)
-  ![GitHub forks](https://img.shields.io/github/forks/codewithsadee/eduweb?style=social)
-[![Twitter Follow](https://img.shields.io/twitter/follow/codewithsadee_?style=social)](https://twitter.com/intent/follow?screen_name=codewithsadee_)
+  ![GitHub repo size](https://img.shields.io/github/repo-size/daniyal-khokhar/eduweb)
+  ![GitHub stars](https://img.shields.io/github/stars/daniyal-khokhar/eduweb?style=social)
+  ![GitHub forks](https://img.shields.io/github/forks/daniyal-khokhar/eduweb?style=social)
+[![Twitter Follow](https://img.shields.io/twitter/follow/daniyal-khokhar?style=social)](https://twitter.com/intent/follow?screen_name=daniyal-khokhar_)
   [![YouTube Video Views](https://img.shields.io/youtube/views/x26bQPxcFX4?style=social)](https://youtu.be/x26bQPxcFX4)
 
   <br />
@@ -13,7 +13,7 @@
 
   EduWeb is a fully responsive education website, <br />Responsive for all devices, build using HTML, CSS, and JavaScript.
 
-  <a href="https://codewithsadee.github.io/eduweb/"><strong>➥ Live Demo</strong></a>
+  <a href="https://daniyal-khokhar.github.io/eduweb/"><strong>➥ Live Demo</strong></a>
 
 </div>
 
@@ -36,18 +36,18 @@ To run **EduWeb** locally, run this command on your git bash:
 Linux and macOS:
 
 ```bash
-sudo git clone https://github.com/codewithsadee/eduweb.git
+sudo git clone https://github.com/daniyal-khokhar/eduweb.git
 ```
 
 Windows:
 
 ```bash
-git clone https://github.com/codewithsadee/eduweb.git
+git clone https://github.com/daniyal-khokhar/eduweb.git
 ```
 
 ### Contact
 
-If you want to contact with me you can reach me at [Twitter](https://www.twitter.com/codewithsadee).
+If you want to contact with me you can reach me at [Twitter](https://www.twitter.com/daniyal-khokhar).
 
 ### License
 
