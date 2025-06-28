@@ -5,9 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./assets/css/style.css">
+    <style>
+        .dropdown {
+    position: relative;
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    padding: 10px 0;
+    min-width: 160px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-link {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #333;
+    white-space: nowrap;
+  }
+
+  .dropdown-link:hover {
+    background-color: #f2f2f2;
+  }
+
+  .navbar-link .arrow {
+    font-size: 1.6rem;
+    margin-left: 4px;
+  }
+
+  .navbar-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+    </style>
 </head>
 <body>
-      <header class="header" data-header>
+  <header class="header" data-header>
     <div class="container">
       <a href="#" class="logo">
         <img src="./assets/images/psy.png" alt="Psychology Portal logo" style="height: 60px; width: 130px;">
@@ -15,7 +57,7 @@
       <nav class="navbar" data-navbar>
         <div class="wrapper">
           <a href="#" class="logo">
-        <img src="./assets/images/psy.png" alt="Psychology Portal logo" style="height: 30px; width: 50px;">
+            <img src="./assets/images/psy.png" alt="Psychology Portal logo" style="height: 30px; width: 50px;">
           </a>
           <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
             <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
@@ -29,13 +71,13 @@
             <a href="./about.html" class="navbar-link" data-nav-link>About</a>
           </li>
           <li class="navbar-item">
-            <a href="./courses.html" class="navbar-link" data-nav-link>Psychology Scales</a>
+            <a href="./books.html" class="navbar-link" data-nav-link>Library</a>
           </li>
           <li class="navbar-item">
-            <a href="./" class="navbar-link" data-nav-link>Blog</a>
+            <a href="./blog.html" class="navbar-link" data-nav-link>Blog</a>
           </li>
           <li class="navbar-item">
-            <a href="./index.html" class="navbar-link" data-nav-link>Contact</a>
+            <a href="#contact" class="navbar-link" data-nav-link>Contact</a>
           </li>
         </ul>
       </nav>
@@ -44,7 +86,7 @@
           <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
         </button>
         <a href="#" class="btn has-before">
-          <span class="span">Try for free</span>
+          <span class="span">Learn more</span>
           <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
         </a>
         <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
@@ -166,7 +208,7 @@
             <address class="address">Housing Colony Layyah, City Layyah</address>
           </div>
           <div class="wrapper">
-            <span class="span">Call:</span>
+            <span class="span">Contact Us</span>
             <a href="tel:+923116721128" class="footer-link">+923116721128</a>
           </div>
           <div class="wrapper">
@@ -264,7 +306,7 @@
         </p>
       </div>
     </div>
-  </footer>
+  </footer> 
 
   <a href="#top" class="back-top-btn" aria-label="back top top" data-back-top-btn>
     <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>

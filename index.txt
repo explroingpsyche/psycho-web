@@ -23,7 +23,7 @@ aria-label = cart
 <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
 0
 
-Try for free
+Learn more
 <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
 
 aria-label = open menu

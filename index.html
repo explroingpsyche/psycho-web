@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,13 +12,58 @@
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
+    rel="stylesheet">
   <link rel="preload" as="image" href="./assets/images/hero-bg.svg">
   <link rel="preload" as="image" href="./assets/images/hero-banner-1.jpg">
   <link rel="preload" as="image" href="./assets/images/hero-banner-2.jpg">
   <link rel="preload" as="image" href="./assets/images/hero-shape-1.svg">
   <link rel="preload" as="image" href="./assets/images/hero-shape-2.png">
+  <style>
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      padding: 10px 0;
+      min-width: 160px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-link {
+      display: block;
+      padding: 8px 16px;
+      text-decoration: none;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .dropdown-link:hover {
+      background-color: #f2f2f2;
+    }
+
+    .navbar-link .arrow {
+      font-size: 1.6rem;
+      margin-left: 4px;
+    }
+
+    .navbar-link {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  </style>
 </head>
+
 <body id="top">
   <header class="header" data-header>
     <div class="container">
@@ -27,7 +73,7 @@
       <nav class="navbar" data-navbar>
         <div class="wrapper">
           <a href="#" class="logo">
-            <img src="./assets/images/psy.png"  alt="Psychology Portal logo" style="height: 30px; width: 50px;">
+            <img src="./assets/images/psy.png" alt="Psychology Portal logo" style="height: 30px; width: 50px;">
           </a>
           <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
             <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
@@ -41,7 +87,7 @@
             <a href="./about.html" class="navbar-link" data-nav-link>About</a>
           </li>
           <li class="navbar-item">
-            <a href="./courses.html" class="navbar-link" data-nav-link>Psychology Scales</a>
+            <a href="./books.html" class="navbar-link" data-nav-link>Library</a>
           </li>
           <li class="navbar-item">
             <a href="./blog.html" class="navbar-link" data-nav-link>Blog</a>
@@ -56,7 +102,7 @@
           <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
         </button>
         <a href="#" class="btn has-before">
-          <span class="span">Try for free</span>
+          <span class="span">Learn more</span>
           <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
         </a>
         <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
@@ -69,17 +115,19 @@
 
   <main>
     <article>
-      <section class="section hero has-bg-image" id="home" aria-label="home" style="background-image: url('./assets/images/hero-bg.svg')">
+      <section class="section hero has-bg-image" id="home" aria-label="home"
+        style="background-image: url('./assets/images/hero-bg.svg')">
         <div class="container">
           <div class="hero-content">
             <h1 class="h1 section-title">
               Psychology Learning <span class="span">Portal</span>
             </h1>
             <p class="hero-text">
-              Explore the fascinating world of human behavior, cognition, and mental processes with our comprehensive psychology courses.
+              Explore the fascinating world of human behavior, cognition, and mental processes with our comprehensive
+              psychology courses.
             </p>
-            <a href="#" class="btn has-before">
-              <span class="span">Find courses</span>
+            <a href="./books.html" class="btn has-before">
+              <span class="span" href="./books.html">Find courses</span>
               <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
             </a>
           </div>
@@ -169,7 +217,8 @@
             <li>
               <div class="category-card" style="--color: 170, 75%, 41%">
                 <div class="card-icon">
-                  <img src="./assets/images/category-1.svg" width="40" height="40" loading="lazy" alt="Clinical Psychology" class="img">
+                  <img src="./assets/images/category-1.svg" width="40" height="40" loading="lazy"
+                    alt="Clinical Psychology" class="img">
                 </div>
                 <h3 class="h3">
                   <a href="#" class="card-title">Clinical Psychology</a>
@@ -177,13 +226,14 @@
                 <p class="card-text">
                   Study and treatment of mental disorders and psychological problems.
                 </p>
-                <span class="card-badge">12 Courses</span>
+                <!-- <span class="card-badge">12 Courses</span> -->
               </div>
             </li>
             <li>
               <div class="category-card" style="--color: 351, 83%, 61%">
                 <div class="card-icon">
-                  <img src="./assets/images/category-2.svg" width="40" height="40" loading="lazy" alt="Cognitive Psychology" class="img">
+                  <img src="./assets/images/category-2.svg" width="40" height="40" loading="lazy"
+                    alt="Cognitive Psychology" class="img">
                 </div>
                 <h3 class="h3">
                   <a href="#" class="card-title">Cognitive Psychology</a>
@@ -191,13 +241,14 @@
                 <p class="card-text">
                   Study of mental processes including perception, memory, and problem-solving.
                 </p>
-                <span class="card-badge">8 Courses</span>
+                <!-- <span class="card-badge">8 Courses</span> -->
               </div>
             </li>
             <li>
               <div class="category-card" style="--color: 229, 75%, 58%">
                 <div class="card-icon">
-                  <img src="./assets/images/category-3.svg" width="40" height="40" loading="lazy" alt="Social Psychology" class="img">
+                  <img src="./assets/images/category-3.svg" width="40" height="40" loading="lazy"
+                    alt="Social Psychology" class="img">
                 </div>
                 <h3 class="h3">
                   <a href="#" class="card-title">Social Psychology</a>
@@ -205,13 +256,14 @@
                 <p class="card-text">
                   Study of how individuals think, feel, and behave in social situations.
                 </p>
-                <span class="card-badge">6 Courses</span>
+                <!-- <span class="card-badge">6 Courses</span> -->
               </div>
             </li>
             <li>
               <div class="category-card" style="--color: 42, 94%, 55%">
                 <div class="card-icon">
-                  <img src="./assets/images/category-4.svg" width="40" height="40" loading="lazy" alt="Developmental Psychology" class="img">
+                  <img src="./assets/images/category-4.svg" width="40" height="40" loading="lazy"
+                    alt="Developmental Psychology" class="img">
                 </div>
                 <h3 class="h3">
                   <a href="#" class="card-title">Developmental Psychology</a>
@@ -219,7 +271,7 @@
                 <p class="card-text">
                   Study of psychological changes throughout the human lifespan.
                 </p>
-                <span class="card-badge">9 Courses</span>
+                <!-- <span class="card-badge">9 Courses</span> -->
               </div>
             </li>
           </ul>
@@ -353,17 +405,21 @@
         </div>
       </section> -->
 
-      <section class="video has-bg-image" aria-label="video" style="margin-bottom: 10%; background-image: url('./assets/images/video-bg.png')">
+      <section class="video has-bg-image" aria-label="video"
+        style="margin-bottom: 10%; background-image: url('./assets/images/video-bg.png')">
         <div class="container">
           <div class="video-card">
             <div class="video-banner img-holder has-after" style="--width: ; --height: ;">
-              <img src="./assets/images/video-banner.jpg" width="970" height="550" loading="lazy" alt="video banner" class="img-cover">
+              <img src="./assets/images/video-banner.jpg" width="970" height="550" loading="lazy" alt="video banner"
+                class="img-cover">
               <button class="play-btn" aria-label="play video">
                 <ion-icon name="play" aria-hidden="true"></ion-icon>
               </button>
             </div>
-            <img src="./assets/images/video-shape-1.png" width="1089" height="605" loading="lazy" alt="" class="shape video-shape-1">
-            <img src="./assets/images/video-shape-2.png" width="158" height="174" loading="lazy" alt="" class="shape video-shape-2">
+            <img src="./assets/images/video-shape-1.png" width="1089" height="605" loading="lazy" alt=""
+              class="shape video-shape-1">
+            <img src="./assets/images/video-shape-2.png" width="158" height="174" loading="lazy" alt=""
+              class="shape video-shape-2">
           </div>
         </div>
       </section>
@@ -399,7 +455,7 @@
         </div>
       </section> -->
 
-     
+
     </article>
   </main>
 
@@ -418,7 +474,7 @@
             <address class="address">Housing Colony Layyah, City Layyah</address>
           </div>
           <div class="wrapper">
-            <span class="span">Call:</span>
+            <span class="span">Contact Us</span>
             <a href="tel:+923116721128" class="footer-link">+923116721128</a>
           </div>
           <div class="wrapper">
@@ -526,4 +582,5 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>
