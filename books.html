@@ -485,7 +485,7 @@
       <!-- Documents -->
       <div id="documents-content" class="show">
         <div id="document-container">
-          <div class="loading">Loading documents...</div>
+          <div class="loading">Loading scales...</div>
         </div>
       </div>
 
@@ -613,7 +613,7 @@
           const data = await res.json();
           allFiles = allFiles.concat(data.files);
           pageToken = data.nextPageToken || '';
-          container.innerHTML = `<div class="loading">Loading documents... (${allFiles.length})</div>`;
+          container.innerHTML = `<div class="loading">Loading scales... (${allFiles.length})</div>`;
         } while (pageToken);
         allFiles.sort((a, b) => a.name.localeCompare(b.name));
         currentPage = 1;
