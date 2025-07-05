@@ -631,7 +631,7 @@
       const items = allFiles.slice(start, start + DOCS_PER_PAGE);
       let html = `<div class="document-controls">
           <div class="document-search">
-            <input type="text" id="doc-search" placeholder="Search documents...">
+            <input type="text" id="doc-search" placeholder="Search scales...">
             <button class="search-button" onclick="searchDocs()">Search</button>
           </div>
           <div>Showing ${start + 1}-${Math.min(start + DOCS_PER_PAGE, allFiles.length)} of ${allFiles.length}</div>
