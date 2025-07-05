@@ -62,6 +62,225 @@
       gap: 4px;
     }
   </style>
+   <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+            padding: 50px 0;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #000000 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo::before {
+            content: "🧠";
+            font-size: 28px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .contact-item span {
+            opacity: 0.8;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .copyright {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+            }
+
+            .contact-info {
+                align-items: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                padding: 12px 30px;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .footer {
+                padding: 30px 0 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .footer-content {
+                gap: 25px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .logo::before {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
 
 <body id="top">
@@ -459,120 +678,67 @@
     </article>
   </main>
 
-  <footer class="footer" style="background-image: url('./assets/images/footer-bg.png')">
-    <div class="footer-top section">
-      <div class="container grid-list">
-        <div class="footer-brand">
-          <a href="#" class="logo">
-            <img src="./assets/images/logo-light.svg" width="162" height="50" alt="Psychology Portal logo">
-          </a>
-          <p class="footer-brand-text">
-            Dedicated to advancing psychological knowledge and education through innovative learning solutions.
-          </p>
-          <div class="wrapper">
-            <span class="span">Address:</span>
-            <address class="address">Housing Colony Layyah, City Layyah</address>
-          </div>
-          <div class="wrapper">
-            <span class="span">Contact Us</span>
-            <a href="tel:+923116721128" class="footer-link">+923116721128</a>
-          </div>
-          <div class="wrapper">
-            <span class="span">Email:</span>
-            <a href="mailto:mzmazhar4@gmail.com" class="footer-link">mzmazhar4@gmail.com</a>
-          </div>
+   <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Brand Section -->
+                <div class="footer-brand">
+                    <a href="#" class="logo">Psychology Portal</a>
+                    <p class="footer-text">
+                        Advancing psychological knowledge through innovative learning solutions.
+                    </p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span>📍</span>
+                            <span>Housing Colony Layyah, City Layyah</span>
+                        </div>
+                        <div class="contact-item">
+                            <span>📞</span>
+                            <a href="tel:+923116721128" style="color: white; text-decoration: none;">+923116721128</a>
+                        </div>
+                        <div class="contact-item">
+                            <span>✉️</span>
+                            <a href="mailto:mzmazhar4@gmail.com" style="color: white; text-decoration: none;">mzmazhar4@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Courses</a></li>
+                        <li><a href="#">Research Papers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="footer-section">
+                    <h3>Stay Connected</h3>
+                    <p class="footer-text">Subscribe for latest psychology research and resources.</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="input-field" placeholder="Your email" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                    <div class="social-links">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">💼</a>
+                        <a href="#" class="social-link">📷</a>
+                        <a href="#" class="social-link">🐦</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">
+                    © 2023 Psychology Learning Portal. All rights reserved.
+                </p>
+            </div>
         </div>
-        <ul class="footer-list">
-          <li>
-            <p class="footer-list-title">Resources</p>
-          </li>
-          <li>
-            <a href="#" class="footer-link">Research Papers</a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">Case Studies</a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">Psychological Tests</a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">Therapy Techniques</a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">Study Guides</a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">Glossary</a>
-          </li>
-        </ul>
-        <ul class="footer-list">
-          <li>
-            <p class="footer-list-title">Quick Links</p>
-          </li>
-          <li>
-            <a href="#" class="footer-link">About Us</a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">Courses</a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">Instructors</a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">Blog</a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">Contact</a>
-          </li>
-          <li>
-            <a href="#" class="footer-link">FAQ</a>
-          </li>
-        </ul>
-        <div class="footer-list">
-          <p class="footer-list-title">Newsletter</p>
-          <p class="footer-list-text">
-            Subscribe to our newsletter for the latest in psychology research and educational resources.
-          </p>
-          <form action="" class="newsletter-form">
-            <input type="email" name="email_address" placeholder="Your email" required class="input-field">
-            <button type="submit" class="btn has-before">
-              <span class="span">Subscribe</span>
-              <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-            </button>
-          </form>
-          <ul class="social-list">
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-facebook"></ion-icon>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-linkedin"></ion-icon>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-instagram"></ion-icon>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="social-link">
-                <ion-icon name="logo-twitter"></ion-icon>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="container">
-        <p class="copyright">
-          Copyright 2023 Psychology Learning Portal. All rights reserved.
-        </p>
-      </div>
-    </div>
-  </footer>
+    </footer>
+
 
   <a href="#top" class="back-top-btn" aria-label="back top top" data-back-top-btn>
     <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>

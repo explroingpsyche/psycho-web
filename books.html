@@ -480,7 +480,7 @@
             <input type="text" id="book-search" placeholder="Search books...">
             <button class="search-button" onclick="searchBooks()">Search</button>
           </div>
-          <div>Showing ${start+1}-${Math.min(start+BOOKS_PER_PAGE, allBooks.length)} of ${allBooks.length}</div>
+          <div>Showing ${start+1}-${Math.min(start+BOOKS_PER_PAGE, allBooks.length)}</div>
         </div><div class="document-grid">`;
       items.forEach(f => {
         const icon = getIconbook(f.mimeType);
