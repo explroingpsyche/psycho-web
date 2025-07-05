@@ -13,7 +13,7 @@
 
   psycho-web.git is a fully responsive education website, <br />Responsive for all devices, build using HTML, CSS, and JavaScript.
 
-  <a href="https://explroingpsyche.github.io/psycho-web.git/"><strong>➥ Live Demo</strong></a>
+  <a href="https://explroingpsyche.github.io/psycho-web/"><strong>➥ Live Demo</strong></a>
 
 </div>
 
