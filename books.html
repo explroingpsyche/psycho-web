@@ -244,7 +244,6 @@
 
     .category-card.active {
       background-color: rgb(209, 207, 207);
-
       color: #333;
       border-bottom: 3px solid var(--active-color);
     }
@@ -325,22 +324,16 @@
     }
 
     .document-search input {
-      padding: 6px 10px;
+      padding: 8px 12px;
       border: 1px solid #ccc;
       border-radius: 4px;
+      font-size: 14px;
+      width: 300px;
     }
 
-    .search-button {
-      padding: 6px 12px;
-      background: var(--active-color);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .search-button:hover {
-      opacity: 0.9;
+    .document-search input:focus {
+      outline: none;
+      border-color: var(--active-color);
     }
 
     .pagination-controls {
@@ -484,6 +477,12 @@
 
       <!-- Documents -->
       <div id="documents-content" class="show">
+        <div class="document-controls">
+          <div class="document-search">
+            <input type="text" id="doc-search" placeholder="Search scales..." oninput="searchDocs(this.value)">
+          </div>
+          <div id="doc-info"></div>
+        </div>
         <div id="document-container">
           <div class="loading">Loading scales...</div>
         </div>
@@ -491,6 +490,12 @@
 
       <!-- Books -->
       <div id="books-content">
+        <div class="document-controls">
+          <div class="document-search">
+            <input type="text" id="book-search" placeholder="Search books..." oninput="searchBooks(this.value)">
+          </div>
+          <div id="book-info"></div>
+        </div>
         <div id="books-container">
           <div class="loading">Loading books...</div>
         </div>
@@ -498,6 +503,12 @@
 
       <!-- Notes -->
       <div id="notes-content">
+        <div class="document-controls">
+          <div class="document-search">
+            <input type="text" id="notes-search" placeholder="Search notes..." oninput="searchNotes(this.value)">
+          </div>
+          <div id="notes-info"></div>
+        </div>
         <div id="notes-container">
           <div class="loading">Loading notes...</div>
         </div>
@@ -515,10 +526,6 @@
                       Advancing psychological knowledge through innovative learning solutions.
                   </p>
                   <div class="contact-info">
-                      <!-- <div class="contact-item">
-                          <span>📍</span>
-                          <span>Housing Colony Layyah, City Layyah</span>
-                      </div> -->
                       <div class="contact-item">
                           <span>📞</span>
                           <a href="tel:+923116721128" style="color: white; text-decoration: none;">+923116721128</a>
@@ -548,12 +555,6 @@
                       <input type="email" class="input-field" placeholder="Your email" required>
                       <button type="submit" class="btn">Subscribe</button>
                   </form>
-                  <!-- <div class="social-links">
-                      <a href="#" class="social-link">📘</a>
-                      <a href="#" class="social-link">💼</a>
-                      <a href="#" class="social-link">📷</a>
-                      <a href="#" class="social-link">🐦</a>
-                  </div> -->
               </div>
           </div>
 
@@ -567,7 +568,7 @@
 
   <a href="#top" class="back-top-btn" aria-label="back top top" data-back-top-btn>
     <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
-  </a> 
+  </a>
 
   <script src="./assets/js/script.js" defer></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -581,6 +582,7 @@
     const BOOKS_PER_PAGE = 20;
     const NOTES_PER_PAGE = 30;
     let allFiles = [], allBooks = [], allNotes = [], currentPage = 1, currentBookPage = 1, currentNotesPage = 1;
+    let originalFiles = [], originalBooks = [], originalNotes = [];
     let currentContentType = 'documents';
 
     function setupCardToggle() {
@@ -591,10 +593,16 @@
           card.classList.add('active');
           const contentType = card.dataset.content;
           currentContentType = contentType;
+          
+          // Hide all content
           document.getElementById('documents-content').classList.remove('show');
           document.getElementById('books-content').classList.remove('show');
           document.getElementById('notes-content').classList.remove('show');
+          
+          // Show selected content
           document.getElementById(`${contentType}-content`).classList.add('show');
+          
+          // Fetch data if needed
           if (contentType === 'documents' && allFiles.length === 0) fetchDocs();
           if (contentType === 'books' && allBooks.length === 0) fetchBooks();
           if (contentType === 'notes' && allNotes.length === 0) fetchNotes();
@@ -616,6 +624,7 @@
           container.innerHTML = `<div class="loading">Loading scales... (${allFiles.length})</div>`;
         } while (pageToken);
         allFiles.sort((a, b) => a.name.localeCompare(b.name));
+        originalFiles = [...allFiles];
         currentPage = 1;
         renderDocs();
       } catch {
@@ -624,41 +633,64 @@
     }
 
     function renderDocs() {
-      const c = document.getElementById('document-container');
-      if (!allFiles.length) return c.innerHTML = `<div class="empty-message">No documents found.</div>`;
+      const container = document.getElementById('document-container');
+      const infoDiv = document.getElementById('doc-info');
+      const isEmpty = allFiles.length === 0;
       const total = Math.ceil(allFiles.length / DOCS_PER_PAGE);
       const start = (currentPage - 1) * DOCS_PER_PAGE;
       const items = allFiles.slice(start, start + DOCS_PER_PAGE);
-      let html = `<div class="document-controls">
-          <div class="document-search">
-            <input type="text" id="doc-search" placeholder="Search scales...">
-            <button class="search-button" onclick="searchDocs()">Search</button>
-          </div>
-          <div>Showing ${start + 1}-${Math.min(start + DOCS_PER_PAGE, allFiles.length)} of ${allFiles.length}</div>
-        </div><div class="document-grid">`;
-      items.forEach(f => {
-        const icon = getIcon(f.mimeType);
-        const type = getType(f.mimeType);
-        html += `<div class="document-card">
-            <div class="document-icon">${icon}</div>
-            <div class="document-name" title="${f.name}">${f.name}</div>
-            <div class="document-meta"><span>${type}</span>
-            <a class="document-link" target="_blank" href="${f.webViewLink}">Download</a></div>
-          </div>`;
-      });
-      html += `</div><div class="pagination-controls">
-          <button class="pagination-button" ${currentPage === 1 ? 'disabled' : ''} onclick="changeDocPage(-1)">Prev</button>
-          <span>Page ${currentPage} of ${total}</span>
-          <button class="pagination-button" ${currentPage === total ? 'disabled' : ''} onclick="changeDocPage(1)">Next</button>
-        </div>`;
-      c.innerHTML = html;
+      
+      // Update info section
+      if (isEmpty) {
+        infoDiv.innerHTML = '';
+      } else {
+        infoDiv.innerHTML = `<div>Showing ${start + 1}-${Math.min(start + DOCS_PER_PAGE, allFiles.length)} of ${allFiles.length}</div>`;
+      }
+      
+      let html = '';
+      
+      if (isEmpty) {
+        html = `<div class="empty-message">No documents found.</div>`;
+      } else {
+        html = `<div class="document-grid">`;
+        items.forEach(f => {
+          const icon = getIcon(f.mimeType);
+          const type = getType(f.mimeType);
+          html += `<div class="document-card">
+              <div class="document-icon">${icon}</div>
+              <div class="document-name" title="${f.name}">${f.name}</div>
+              <div class="document-meta"><span>${type}</span>
+              <a class="document-link" target="_blank" href="${f.webViewLink}">Download</a></div>
+            </div>`;
+        });
+        html += `</div>`;
+        
+        if (total > 1) {
+          html += `<div class="pagination-controls">
+              <button class="pagination-button" ${currentPage === 1 ? 'disabled' : ''} onclick="changeDocPage(-1)">Prev</button>
+              <span>Page ${currentPage} of ${total}</span>
+              <button class="pagination-button" ${currentPage === total ? 'disabled' : ''} onclick="changeDocPage(1)">Next</button>
+            </div>`;
+        }
+      }
+      
+      container.innerHTML = html;
     }
-    function changeDocPage(d) { currentPage += d; renderDocs(); }
-    function searchDocs() {
-      const q = document.getElementById('doc-search').value.toLowerCase();
-      if (!q) return renderDocs();
-      const f = allFiles.filter(x => x.name.toLowerCase().includes(q));
-      currentPage = 1; allFiles = f; renderDocs();
+
+    function changeDocPage(d) { 
+      currentPage += d; 
+      renderDocs(); 
+    }
+
+    function searchDocs(query) {
+      const q = query.toLowerCase();
+      if (!q) {
+        allFiles = [...originalFiles];
+      } else {
+        allFiles = originalFiles.filter(x => x.name.toLowerCase().includes(q));
+      }
+      currentPage = 1;
+      renderDocs();
     }
 
     async function fetchBooks() {
@@ -675,6 +707,7 @@
           container.innerHTML = `<div class="loading">Loading books... (${allBooks.length})</div>`;
         } while (pageToken);
         allBooks.sort((a, b) => a.name.localeCompare(b.name));
+        originalBooks = [...allBooks];
         currentBookPage = 1;
         renderBooks();
       } catch {
@@ -683,41 +716,64 @@
     }
 
     function renderBooks() {
-      const c = document.getElementById('books-container');
-      if (!allBooks.length) return c.innerHTML = `<div class="empty-message">No books found.</div>`;
+      const container = document.getElementById('books-container');
+      const infoDiv = document.getElementById('book-info');
+      const isEmpty = allBooks.length === 0;
       const total = Math.ceil(allBooks.length / BOOKS_PER_PAGE);
       const start = (currentBookPage - 1) * BOOKS_PER_PAGE;
       const items = allBooks.slice(start, start + BOOKS_PER_PAGE);
-      let html = `<div class="document-controls">
-          <div class="document-search">
-            <input type="text" id="book-search" placeholder="Search books...">
-            <button class="search-button" onclick="searchBooks()">Search</button>
-          </div>
-          <div>Showing ${start + 1}-${Math.min(start + BOOKS_PER_PAGE, allBooks.length)} of ${allBooks.length}</div>
-        </div><div class="document-grid">`;
-      items.forEach(f => {
-        const icon = getIconbook(f.mimeType);
-        const type = getType(f.mimeType);
-        html += `<div class="document-card">
-            <div class="document-icon">${icon}</div>
-            <div class="document-name" title="${f.name}">${f.name}</div>
-            <div class="document-meta"><span>${type}</span>
-            <a class="document-link" target="_blank" href="${f.webViewLink}">Download</a></div>
-          </div>`;
-      });
-      html += `</div><div class="pagination-controls">
-          <button class="pagination-button" ${currentBookPage === 1 ? 'disabled' : ''} onclick="changeBookPage(-1)">Prev</button>
-          <span>Page ${currentBookPage} of ${total}</span>
-          <button class="pagination-button" ${currentBookPage === total ? 'disabled' : ''} onclick="changeBookPage(1)">Next</button>
-        </div>`;
-      c.innerHTML = html;
+      
+      // Update info section
+      if (isEmpty) {
+        infoDiv.innerHTML = '';
+      } else {
+        infoDiv.innerHTML = `<div>Showing ${start + 1}-${Math.min(start + BOOKS_PER_PAGE, allBooks.length)} of ${allBooks.length}</div>`;
+      }
+      
+      let html = '';
+      
+      if (isEmpty) {
+        html = `<div class="empty-message">No books found.</div>`;
+      } else {
+        html = `<div class="document-grid">`;
+        items.forEach(f => {
+          const icon = getIconbook(f.mimeType);
+          const type = getType(f.mimeType);
+          html += `<div class="document-card">
+              <div class="document-icon">${icon}</div>
+              <div class="document-name" title="${f.name}">${f.name}</div>
+              <div class="document-meta"><span>${type}</span>
+              <a class="document-link" target="_blank" href="${f.webViewLink}">Download</a></div>
+            </div>`;
+        });
+        html += `</div>`;
+        
+        if (total > 1) {
+          html += `<div class="pagination-controls">
+              <button class="pagination-button" ${currentBookPage === 1 ? 'disabled' : ''} onclick="changeBookPage(-1)">Prev</button>
+              <span>Page ${currentBookPage} of ${total}</span>
+              <button class="pagination-button" ${currentBookPage === total ? 'disabled' : ''} onclick="changeBookPage(1)">Next</button>
+            </div>`;
+        }
+      }
+      
+      container.innerHTML = html;
     }
-    function changeBookPage(d) { currentBookPage += d; renderBooks(); }
-    function searchBooks() {
-      const q = document.getElementById('book-search').value.toLowerCase();
-      if (!q) return renderBooks();
-      const f = allBooks.filter(x => x.name.toLowerCase().includes(q));
-      currentBookPage = 1; allBooks = f; renderBooks();
+
+    function changeBookPage(d) { 
+      currentBookPage += d; 
+      renderBooks(); 
+    }
+
+    function searchBooks(query) {
+      const q = query.toLowerCase();
+      if (!q) {
+        allBooks = [...originalBooks];
+      } else {
+        allBooks = originalBooks.filter(x => x.name.toLowerCase().includes(q));
+      }
+      currentBookPage = 1;
+      renderBooks();
     }
 
     async function fetchNotes() {
@@ -734,6 +790,7 @@
           container.innerHTML = `<div class="loading">Loading notes... (${allNotes.length})</div>`;
         } while (pageToken);
         allNotes.sort((a, b) => a.name.localeCompare(b.name));
+        originalNotes = [...allNotes];
         currentNotesPage = 1;
         renderNotes();
       } catch {
@@ -742,41 +799,66 @@
     }
 
     function renderNotes() {
-      const c = document.getElementById('notes-container');
-      if (!allNotes.length) return c.innerHTML = `<div class="empty-message">No notes found.</div>`;
+      const container = document.getElementById('notes-container');
+      const infoDiv = document.getElementById('notes-info');
+      const isEmpty = allNotes.length === 0;
       const total = Math.ceil(allNotes.length / NOTES_PER_PAGE);
       const start = (currentNotesPage - 1) * NOTES_PER_PAGE;
       const items = allNotes.slice(start, start + NOTES_PER_PAGE);
-      let html = `<div class="document-controls">
-          <div class="document-search">
-            <input type="text" id="notes-search" placeholder="Search notes...">
-            <button class="search-button" onclick="searchNotes()">Search</button>
-          </div>
-          <div>Showing ${start + 1}-${Math.min(start + NOTES_PER_PAGE, allNotes.length)} of ${allNotes.length}</div>
-        </div><div class="document-grid">`;
-      items.forEach(f => {
-        const icon = getIconNotes(f.mimeType);
-        const type = getType(f.mimeType);
-        html += `<div class="document-card">
-            <div class="document-icon">${icon}</div>
-            <div class="document-name" title="${f.name}">${f.name}</div>
-            <div class="document-meta"><span>${type}</span>
-            <a class="document-link" target="_blank" href="${f.webViewLink}">Download</a></div>
-          </div>`;
-      });
-      html += `</div><div class="pagination-controls">
-          <button class="pagination-button" ${currentNotesPage === 1 ? 'disabled' : ''} onclick="changeNotesPage(-1)">Prev</button>
-          <span>Page ${currentNotesPage} of ${total}</span>
-          <button class="pagination-button" ${currentNotesPage === total ? 'disabled' : ''} onclick="changeNotesPage(1)">Next</button>
-        </div>`;
-      c.innerHTML = html;
+      
+      // Update info section
+      if (isEmpty) {
+        infoDiv.innerHTML = '';
+      } else {
+        infoDiv.innerHTML = `<div>Showing ${start + 1}-${Math.min(start + NOTES_PER_PAGE, allNotes.length)} of ${allNotes.length}</div>`;
+      }
+      
+      let html = '';
+      
+      if (isEmpty) {
+        html = `<div class="empty-message">No notes found.</div>`;
+      } else {
+        html = `<div class="document-grid">`;
+        items.forEach(f => {
+          const icon = getIconNotes(f.mimeType);
+          const type = getType(f.mimeType);
+          html += `<div class="document-card">
+              <div class="document-icon">${icon}</div>
+              <div class="document-name" title="${f.name}">${f.name}</div>
+              <div class="document-meta"><span>${type}</span>
+              <a class="document-link" target="_blank" href="${f.webViewLink}">Download</a></div>
+            </div>`;
+        });
+        html += `</div>`;
+        
+        if (total > 1) {
+          html += `<div class="pagination-controls">
+              <button class="pagination-button" ${currentNotesPage === 1 ? 'disabled' : ''} onclick="changeNotesPage(-1)">Prev</button>
+              <span>Page ${currentNotesPage} of ${total}</span>
+              <button class="pagination-button" ${currentNotesPage === total ? 'disabled' : ''} onclick="changeNotesPage(1)">Next</button>
+            </div>`;
+        }
+      }
+      
+      container.innerHTML = html;
     }
-    function changeNotesPage(d) { currentNotesPage += d; renderNotes(); }
-    function searchNotes() {
-      const q = document.getElementById('notes-search').value.toLowerCase();
-      if (!q) return renderNotes();
-      const f = allNotes.filter(x => x.name.toLowerCase().includes(q));
-      currentNotesPage = 1; allNotes = f; renderNotes();
+
+    function changeNotesPage(d) { 
+      currentNotesPage += d; 
+      renderNotes(); 
+    }
+
+ 
+
+    function searchNotes(query) {
+      const q = query.toLowerCase();
+      if (!q) {
+        allNotes = [...originalNotes];
+      } else {
+        allNotes = originalNotes.filter(x => x.name.toLowerCase().includes(q));
+      }
+      currentNotesPage = 1;
+      renderNotes();
     }
 
     function getType(m) {
@@ -786,6 +868,7 @@
       if (m.includes('spreadsheet')) return 'Sheet';
       return 'File';
     }
+
     function getIcon(m) {
       if (m.includes('pdf')) return '📝';
       if (m.includes('word')) return '📘';
